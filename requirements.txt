@@ -1,0 +1,12 @@
+SQLAlchemy~=2.0.36
+fastapi~=0.115.6
+asyncpg
+uvicorn
+python-multipart
+pytest~=8.3.4
+pytest-asyncio
+aioresponses
+psycopg2-binary
+python-dotenv
+aiohttp
+jinja2

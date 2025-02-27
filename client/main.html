@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Погода</title>
+   <link rel="stylesheet" href="{{ url_for('client', path='/style.css') }}">
+</head>
+<body>
+    <header>
+        <h1>Узнайте погоду в вашем городе</h1>
+        <nav>
+                <a href="/history/weather/">История погоды</a>
+        </nav>
+    </header>
+
+    <main>
+
+        <form method="post" action="/get/weather/info/">
+            <input type="text" name="city" placeholder="Введите название города" required>
+            <button type="submit">Получить погоду</button>
+        </form>
+
+        {% if data %}
+            <div class="weather-card">
+                <h3>Погода в городе {{ city_name }}</h3>
+                <p><strong>Температура:</strong> {{ data.temperature }}°C</p>
+                <p><strong>Влажность:</strong> {{ data.humidity }}%</p>
+                <p><strong>Описание:</strong> {{ data.weather_description }}</p>
+            </div>
+        {% endif %}
+
+        {% if error_message %}
+            <p class="error-message">{{ error_message }}</p>
+        {% endif %}
+
+    </main>
+</body>
+</html>

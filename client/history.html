@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>История поиска погоды</title>
+    <link rel="stylesheet" href="{{ url_for('client', path='/style.css') }}">
+
+</head>
+<body>
+    <header>
+        <h1>История поиска погоды</h1>
+        <nav>
+                <a href="/get/weather/">Главная</a>
+        </nav>
+    </header>
+
+    <main>
+        {% if history %}
+            <table>
+                <thead>
+                    <tr>
+                        <th>Город</th>
+                        <th>Температура (°C)</th>
+                        <th>Влажность (%)</th>
+                        <th>Описание</th>
+                        <th>Дата запроса</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for entry in history %}
+                        <tr>
+                            <td>{{ entry.city_name }}</td>
+                            <td>{{ entry.temperature }}</td>
+                            <td>{{ entry.humidity }}</td>
+                            <td>{{ entry.weather_description }}</td>
+                            <td>{{ entry.create_at.strftime('%Y-%m-%d %H:%M') }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <p class="error-message">{{ error_message }}</p>
+        {% endif %}
+    </main>
+</body>
+</html>

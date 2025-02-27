@@ -1,16 +1,19 @@
-# This is a sample Python script.
+from server.routes.main_route import router as main_route
+from server.routes.history_route import router as history_route
+from fastapi.staticfiles import StaticFiles
 
-# Press Shift+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
+from fastapi import FastAPI
+from server.data.create_engine import init_db
+
+app = FastAPI()
 
 
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
+@app.on_event("startup")
+async def startup():
+    await init_db()  # Вызываем init_db() при старте приложения
 
 
-# Press the green button in the gutter to run the script.
-if __name__ == '__main__':
-    print_hi('PyCharm')
-
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+# Подключение маршрутов
+app.mount("/static", StaticFiles(directory="client"), name="client")
+app.include_router(main_route, prefix="")
+app.include_router(history_route, prefix="")

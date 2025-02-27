@@ -2,8 +2,15 @@ import asyncio
 from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession
 from sqlalchemy.orm import sessionmaker
 from .models import Base
+import os
+from dotenv import load_dotenv
 
-DATABASE_URL = "postgresql+asyncpg://weather_user:weather_pass@db/weather_db"
+
+load_dotenv()
+
+DATABASE_URL = os.getenv("DATABASE_URL")
+if not DATABASE_URL:
+    raise ValueError("DATABASE_URL отсутствует в файле .env!")
 
 engine = create_async_engine(DATABASE_URL, echo=True)
 
